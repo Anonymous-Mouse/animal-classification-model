@@ -134,14 +134,18 @@ Examples of Average RGB values for each image in the dataset:
 
 ### Feature 2: Histogram of oriented gradients (HOG)
 Next, we want to grab the HOG of all the images as the next feature descriptor. HOG is a well-known feature descriptor for image classification, specifically object identification. We want to try this out.
+
 ![Histogram of Oriented Gradients for Zebra](https://github.com/Anonymous-Mouse/animal-classification-model/blob/main/hog.png)
+
 Using 'zebras' as an example, we see the output of a 2D array (A list of 1D arrays describing an image), and a HOG graph to depict the gradients of the images.
 
 ### Feature 3: Edges
 The second feature we decide to select for are the edges of a picture. This extractEdgesFunction transforms each image and only shows the outlines that the CV2 library identifies.
 
 You can see the new images below.
+
 ![Edge Feature of Zebra](https://github.com/Anonymous-Mouse/animal-classification-model/blob/main/edges.png)
+
 As you can see, all the images have been converted so that the outlines become the main feature.
 
 ## More data processing : resizing resolution
@@ -187,7 +191,6 @@ The reason why we are trying this out, although lower level, is because our thre
 
 ![Confusion Matrix 2](https://github.com/Anonymous-Mouse/animal-classification-model/blob/main/confus2.PNG)
 
-
 ## Model 3 : EDGES
 In this section, we utilize the cv2 library's ability to extract the edges from an image as its main feature for our models.
 As usual, grab the edges feature for each image, and label them correspondingly.
@@ -196,6 +199,7 @@ Split the data into training and testing sets.
 Build our KNN model with our training data.
 As you can see, our accuracy using edges is not very good. This was not what we expected, because the animal outlines seem very distinct from one another with the human eye.
 It is no more significant than a random number generator. Why is this? We create a confusion matrix to see our model's accuracies and preferences.
+
 ![Confusion Matrix 3](https://github.com/Anonymous-Mouse/animal-classification-model/blob/main/confus3.PNG)
 
 As you can see, our model thinks EVERYTHING is a coyote.
@@ -206,7 +210,9 @@ You will see this final RGB model near the end of the document.
 
 # K-Means Clustering
 ## In this section, we use the K-Means clustering algorithm using the hogFunction
+
 ![Silhoutte 1](https://github.com/Anonymous-Mouse/animal-classification-model/blob/main/silhoutte1.png)
+
 Silhouette Score: 0.020696293943144255
 K-Means Clustering Analysis: Histogram of Oriented Gradients
 
@@ -254,6 +260,7 @@ Overall accuracy of the K Means clustering algorithm:
 ## In this section, we will use K-Means clustering on the HSV of an image.
 
 ![Silhoutte2](https://github.com/Anonymous-Mouse/animal-classification-model/blob/main/silhoutte2.png)
+
 Silhouette Score: 0.019960438658874913
 K-Means Clustering Analysis: Edges
 Looking at the K-means clustering for our model using edges, we have a low average silhouette score at 0.11. The data appears to be in one large cluster similar to the HOG model K-means clustering. This is because edges could be anywhere on an image and our model doesn’t try to isolate patterns of edges or what body part they indicate.
@@ -326,15 +333,20 @@ Accuracy for Zebra Images: 0.5294117647058824
 As you see, our accuracy for this model is .625, which is significantly higher than an RNG model's .33.
 
 ![Confusion Matrix 4](https://github.com/Anonymous-Mouse/animal-classification-model/blob/main/confus4.PNG)
+
 This is most likely due to the contrasting colors in both animals and habitat backgrounds.
 We see that this model is accurate in their respective categories. The model does not overdecide on a particular class like our edges model.
 
 Next, we evaluate using a K-Means clustering model.
 
 To find an optimal K, we try the elbow method.
+
 ![Elbow Graph](https://github.com/Anonymous-Mouse/animal-classification-model/blob/main/elbow.png)
+
 We find an elbow at k=3. So that will be our k.
+
 ![Confusion Matrix 4](https://github.com/Anonymous-Mouse/animal-classification-model/blob/main/confus4.PNG)
+
 K-Means Clustering Analysis: RGB Intensity
 
 Looking at the K-means clustering for the intensity of RGB values, our average silhouette score is again very low, indicating the data points are very close to the decision boundaries between clusters. In this graph, they are overlapping. This is to be expected as the RGB pixels in a single image are heavily varied if the animal we are trying to classify is colorful or the background contrasts the animal. This data seems to have a lot of darker colors, as much of the data is located near the origin. We notice a small cluster near the top right, indicating a high intensity of white, which could indicate a zebra. If the pictures were cropped to just have the animal itself with a blank background, then this would probably provide a more accurate clustering.
